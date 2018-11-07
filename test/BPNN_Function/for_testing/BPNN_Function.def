@@ -1,0 +1,8 @@
+LIBRARY BPNN_Function
+EXPORTS
+BPNN_FunctionInitialize
+BPNN_FunctionInitializeWithHandlers
+BPNN_FunctionTerminate
+BPNN_FunctionPrintStackTrace
+mlxBPNN_Function
+

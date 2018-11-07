@@ -1,0 +1,78 @@
+# CPU实时监控
+# 作者：Charles
+# 公众号：Charles的皮卡丘
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as font_manager
+import psutil as p
+
+
+POINTS = 300
+fig, ax = plt.subplots()  #fig  轴是在图中构建的。
+
+#查看官方文档  https://matplotlib.org/api/axes_api.html
+ax.set_ylim([0, 100]) #Y轴范围
+ax.set_xlim([0, POINTS]) #X轴范围
+ax.set_autoscale_on(False) #Set whether autoscaling is applied on plot commands 设置是否在绘图命令上应用自动缩放
+ax.set_xticks([]) #Set the x ticks with list of ticks  使用刻度列表设置x刻度
+ax.set_yticks(range(0, 101, 10)) #刻度：列表 y轴刻度位置列表 10个一分 #If False sets major ticks, if True sets minor ticks. Default is False.
+ax.grid(True)
+# 执行用户进程的时间百分比
+user = [None] * POINTS
+# 执行内核进程和中断的时间百分比
+sys = [None] * POINTS
+# CPU处于空闲状态的时间百分比
+idle = [None] * POINTS
+l_user, = ax.plot(range(POINTS), user, label='User %')
+l_sys, = ax.plot(range(POINTS), sys, label='Sys %')
+l_idle, = ax.plot(range(POINTS), idle, label='Idle %')
+ax.legend(loc='upper center', ncol=4, prop=font_manager.FontProperties(size=10))
+bg = fig.canvas.copy_from_bbox(ax.bbox)
+
+
+def cpu_usage():
+	t = p.cpu_times()
+	return [t.user, t.system, t.idle]
+
+
+before = cpu_usage()
+
+
+def get_cpu_usage():
+	global before
+	now = cpu_usage()
+	delta = [now[i] - before[i] for i in range(len(now))]
+	total = sum(delta)
+	before = now
+	return [(100.0*dt)/(total+0.1) for dt in delta]
+
+
+def OnTimer(ax):
+	global user, sys, idle, bg
+	tmp = get_cpu_usage()
+	user = user[1:] + [tmp[0]]
+	sys = sys[1:] + [tmp[1]]
+	idle = idle[1:] + [tmp[2]]
+	l_user.set_ydata(user)
+	l_sys.set_ydata(sys)
+	l_idle.set_ydata(idle)
+	while True:
+		try:
+			ax.draw_artist(l_user)
+			ax.draw_artist(l_sys)
+			ax.draw_artist(l_idle)
+			break
+		except:
+			pass
+	ax.figure.canvas.draw()
+
+
+def start_monitor():
+
+	timer = fig.canvas.new_timer(interval=100) #时间间隔
+	timer.add_callback(OnTimer, ax)
+	timer.start()
+	plt.show()
+
+
+if __name__ == '__main__':
+	start_monitor()

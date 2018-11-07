@@ -1,0 +1,6 @@
+BPNN_FunctionInitialize
+BPNN_FunctionInitializeWithHandlers
+BPNN_FunctionTerminate
+BPNN_FunctionPrintStackTrace
+mlxBPNN_Function
+

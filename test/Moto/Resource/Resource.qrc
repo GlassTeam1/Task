@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="img">
+    <file>button1.png</file>
+    <file>button.png</file>
+    <file>green.png</file>
+    <file>red.png</file>
+    <file>backgound.png</file>
+    <file>buttonStop.ico</file>
+    <file>buttonStart.ico</file>
+    <file>MonitorIcon.ico</file>
+    <file>motoicon.png</file>
+  </qresource>
+</RCC>
