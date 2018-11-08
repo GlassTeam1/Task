@@ -1,7 +1,0 @@
-³ÂÁ¢²¨
-
-
-http://pypi.hustunique.com/
-https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-http://pypi.douban.com/
-http://pypi.hustunique.com/win-64/repodata.json
