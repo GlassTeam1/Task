@@ -2,6 +2,7 @@ from PyQt5.QtCore import QPoint, QRect, QTimer, Qt
 from PyQt5.QtGui import QPainter, QPen, QPolygon
 from PyQt5.QtWidgets import QApplication, QWidget
 import sys
+import pyqtgraph
 import numpy as np
 #下面这个类用来模拟获取数据
 class Data:
