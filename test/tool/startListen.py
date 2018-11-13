@@ -1,15 +1,15 @@
 #@Time    :2018/10/30 10:21
 import serial.tools.list_ports
-import tool.const as const
-import tool.analysisData as ad
-import tool.bytes2int as b2i
+# import Task.test.tool.const as const
+# import Task.test.tool.analysisData as ad
+# import Task.test.tool.bytes2int as b2i
 
 '''
 定义常量
 '''
-const.BAUDRATE = 38400 #波特率
-const.DATABITS = 8 #数据位
-const.STOPBITS = 1 #终止位
+# const.BAUDRATE = 38400 #波特率
+# const.DATABITS = 8 #数据位
+# const.STOPBITS = 1 #终止位
 
 '''
 打开串口监听数据
@@ -29,9 +29,9 @@ else:
     配置串口参数  波特率、数据位、终止位
     '''
     serialPort = serial.Serial(serialName)
-    serialPort.baudrate = const.BAUDRATE
-    serialPort.bytesize = const.DATABITS
-    serialPort.stopbits = const.STOPBITS
+    serialPort.baudrate = 38400 #const.BAUDRATE
+    serialPort.bytesize = 8 #const.DATABITS
+    serialPort.stopbits = 1 #const.STOPBITS
 
     print("可用端口名>>>", serialPort.name)
 
@@ -41,7 +41,13 @@ else:
     '''
     通过比较数据长度是否符合协议要求舍弃脏数据
     '''
+    file_name = "bytes_data_2018年11月13日.txt"
+    my_open = open(file_name, 'ab')
+    # 打开fie_name路径下的文件,采用追加模式
+    # 若文件不存在,创建，若存在，追加
+
     flag = True
+    index = 1
     while flag:
         '''
         每次取4组（取其中三组为有效数据），每组长度13
@@ -50,23 +56,30 @@ else:
         所以每次取的数据的长度是6倍的一组数据的长度
         6 * 13 = 78
         '''
-        primaryData = serialPort.read(78)
+        primaryData = serialPort.read(78*2) #两个传感器
+
+        '''
+        存入文件
+        '''
+        index = index+1
+        my_open.write(primaryData)
+        print('正在存入数据%d'%(index))
         '''
         截取到有效位
         '''
-        index = 0;
+        # index = 0;
         #如果数据已经查找一半了还没有找到起始位置，则剩下的数据肯定不能满足是完整的一组数据了
-        for i in range(int (len(primaryData)/2) +1):
-            type = b2i.bytes2Int16(primaryData[i+4:i+6])
-            if (primaryData[i] == 173) and (
-                    primaryData[i + 1] == 173) and (
-                    type == const.ACCELEROMETERTYPE):
-                index = i
-                break
+        # for i in range(int (len(primaryData)/2) +1):
+        #     type = b2i.bytes2Int16(primaryData[i+4:i+6])
+        #     if (primaryData[i] == 173) and (
+        #             primaryData[i + 1] == 173) and (
+        #             type == const.ACCELEROMETERTYPE):
+        #         index = i
+        #         break
         '''
         调用启动数据解析模块
         '''
-        primaryData = primaryData[index:index+39]
-        #print(primaryData)  # 打印数据
-        #print(len(primaryData)) #测试是否能够满足每组截取出来的数据都能获取完整
-        flag = ad.analysisData(primaryData)
+        # primaryData = primaryData[index:index+39]
+        # #print(primaryData)  # 打印数据
+        # #print(len(primaryData)) #测试是否能够满足每组截取出来的数据都能获取完整
+        # flag = ad.analysisData(primaryData)
