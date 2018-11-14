@@ -7,6 +7,7 @@ import sys
 import numpy as np
 from producer import *
 from pyqtgraph.Qt import QtGui, QtCore
+import numpy as np
 import pyqtgraph as pg
 
 '''
@@ -55,11 +56,54 @@ win.resize(1000, 800)
 win.setWindowTitle('pyqtgraph example: Plotting')
 # Enable antialiasing for prettier plots  防止反走样
 pg.setConfigOptions(antialias=True)
-p1 = win.addPlot(title="Updating plot")
-# 颜色
-curve = p1.plot(pen='y')
-p1.enableAutoRange('xy', True)
+p1 = win.addPlot(title="结果")
 
+# 颜色
+curve = p1.plot(pen='y',symbolBrush=(0,255,0))
+p1.enableAutoRange('xy', True)
+p1.setXRange(0,10)
+#第二个图
+p2 = win.addPlot(title="偏转角")
+p2.addLegend(offset=(0,0))
+#curve2 = p2.plot(pen='y',symbolBrush=(0,255,0))
+p2.enableAutoRange('xy',True)
+#换行
+win.nextRow()
+#第三个图
+p3=win.addPlot(title='加速度x')
+curve3=p3.plot(pen='y',symbolBrush=(0,255,0))
+p3.enableAutoRange('xy',True)
+p3.setXRange(0,10)
+#第四个图
+p4=win.addPlot(title='加速度y')
+curve4=p4.plot(pen='y',symbolBrush=(0,255,0))
+p4.enableAutoRange('xy',True)
+p4.setXRange(0,10)
+#换行
+win.nextRow()
+#第五个图
+p5=win.addPlot(title='加速度z')
+curve5=p5.plot(pen='y',symbolBrush=(0,255,0))
+p5.enableAutoRange('xy',True)
+p5.setXRange(0,10)
+#第六个图
+p6=win.addPlot(title='风压')
+curve6=p6.plot(pen='y',symbolBrush=(0,255,0))
+p6.enableAutoRange('xy',True)
+p6.setXRange(0,10)
+#换行
+win.nextRow()
+#第七个图
+p7=win.addPlot(title='电阻')
+#symbolBrush用来设置点的颜色
+curve7=p7.plot(pen='y',symbolBrush=(0,255,0))
+p7.enableAutoRange('xy',True)
+p7.setXRange(0,10)
+#第八个图
+p8=win.addPlot(title='温度')
+curve8=p8.plot(pen='y',symbolBrush=(0,255,0))
+p8.enableAutoRange('xy',True)
+p8.setXRange(0,10)
 def TimeAction():
     '''
             对于不同的图表，数据来源不同，可以采用多线程的方式;
@@ -89,14 +133,32 @@ def TimeAction():
     datas_wendu.insert(0, data_queue[4])  # 温度
     #data = Data().data
     # 头插法不断插入到总datas里
-    #datas.insert(0,data)
+    #datas.insert(0,datas)
     #更新表1数据
-    print(datas)
+    # print(datas)
+    # print(datas1)
     #p1.plot(x=list(range(0,10,1)),y=datas[-10:])
     curve.setData(datas[:11])
+    # p2.update()
+    #clear每次都清空上一次画出来的图（是清除所有的plot)
+    #为什么不用setData，因为setData不能画多条线
+    p2.setXRange(0,10)
+    if len(datas)==1:
+        p2.plot(datas1[:11],clear=True,pen='y',symbolBrush=(0,255,0),name='转角x')
+        p2.plot(datas2[:11],pen='g',symbolBrush=(0,255,0),name='转角y')
+        p2.plot(datas3[:11],pen='r',symbolBrush=(0,255,0),name='转角z')
+    else:
+        p2.plot(datas1[:11], clear=True, pen='y', symbolBrush=(0, 255, 0))
+        p2.plot(datas2[:11], pen='g', symbolBrush=(0, 255, 0))
+        p2.plot(datas3[:11], pen='r', symbolBrush=(0, 255, 0))
+    #curve2.setData(datas1[:11])
+    curve3.setData(datas_x[:11])
+    curve4.setData(datas_y[:11])
+    curve5.setData(datas_z[:11])
+    curve6.setData(datas_fengya[:11])
+    curve7.setData(datas_dianzu[:11])
+    curve8.setData(datas_wendu[:11])
 
-    if len(datas) > maxLength:
-        datas.pop(- 1)
 timer=QTimer()
         #触发器
 timer.timeout.connect(TimeAction)
@@ -104,10 +166,13 @@ timer.setInterval(updateInterval)
 timer.start()
 
 
-win.nextRow()
+
+
 
 
 if __name__ == '__main__':
+    producer.start()
+    consumer.start()
     import sys
     if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
         QtGui.QApplication.instance().exec_()
