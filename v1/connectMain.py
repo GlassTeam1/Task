@@ -14,14 +14,18 @@ class Main(QMainWindow, windowTest.Ui_MainWindow2):
 
 class Child(QMainWindow, print.Ui_MainWindow):
     def __init__(self):
+        # super(Child, self).__init__()
+        # self.setupUi(self)
+        # self.producer.start()
+        # self.consumer.start()
+        # self.timer.start()
+        # sys.exit(app.exec_())
         super(Child, self).__init__()
-        self.setupUi(QMainWindow)
+        self.setupUi(self)
+
         self.producer.start()
         self.consumer.start()
         self.timer.start()
-        QMainWindow.show()
-        sys.exit(app.exec_())
-
 
     def OPEN(self):
         self.show()
