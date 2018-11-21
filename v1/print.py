@@ -82,7 +82,22 @@ class Ui_MainWindow(object):
         # print(datas)
         # print(datas1)
         # p1.plot(x=list(range(0,10,1)),y=datas[-10:])
-        self.curve.setData(self.datas[:11])
+        #self.curve.setData(self.datas[:11])
+        self.temp=[]
+        self.temp_1=[]
+        for i,elem in enumerate(self.datas[:11]):
+            if elem>=0.5:
+                self.temp.insert(i,elem)
+                self.temp_1.insert(i,None)
+            elif elem>=0.3:
+                self.temp_1.insert(i,elem)
+                self.temp.insert(i,None)
+            else:
+                self.temp.insert(i,None)
+                self.temp_1.insert(i,None)
+        self.p1.plot(self.datas[:11],clear=True,pen='y', symbolBrush=(0, 255, 0))
+        self.p1.plot(self.temp, symbolBrush=(0, 0, 255), pen=None)
+        self.p1.plot(self.temp_1,symbolBrush=(255, 255, 0), pen=None)
         # p2.update()
         # clear每次都清空上一次画出来的图（是清除所有的plot)
         # 为什么不用setData，因为setData不能画多条线
