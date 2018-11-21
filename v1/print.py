@@ -102,10 +102,10 @@ class Ui_MainWindow(object):
         self.curve6.setData(self.datas_fengya[:11])
         self.curve7.setData(self.datas_dianzu[:11])
         self.curve8.setData(self.datas_wendu[:11])
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1169, 786)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+    def setupUi(self, MainWindow10):
+        MainWindow10.setObjectName("MainWindow1")
+        MainWindow10.resize(1169, 786)
+        self.centralwidget = QtWidgets.QWidget(MainWindow10)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
@@ -363,17 +363,17 @@ class Ui_MainWindow(object):
     def buttonClicked1(self):
         self.timer.start()
 
-import sys
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-
-    #开启生产者消费者线程 分别用于读取数据和存储数据
-    ui.producer.start()
-    ui.consumer.start()
-    #计时器开始
-    ui.timer.start()
-    MainWindow.show()
-    sys.exit(app.exec_())
+# import sys
+# if __name__ == "__main__":
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#
+#     #开启生产者消费者线程 分别用于读取数据和存储数据
+#     ui.producer.start()
+#     ui.consumer.start()
+#     #计时器开始
+#     ui.timer.start()
+#     MainWindow.show()
+#     sys.exit(app.exec_())

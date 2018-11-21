@@ -1,17 +1,30 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow2.ui'
+# Form implementation generated from reading ui file 'windowTest.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import time
+
+from PyQt5.QtCore import QDate
+
 
 class Ui_MainWindow2(object):
+    # 只能传入radio，不能使用self.radioButton
+    def radioF(self,radio,dateEdit,timeEdit):
+        if(radio.isChecked()):
+            self.dateEdit.setDisabled(True)
+            self.timeEdit.setDisabled(True)
+        else:
+            self.dateEdit.setDisabled(False)
+            self.timeEdit.setDisabled(False)
+
     def setupUi(self, MainWindow2):
         MainWindow2.setObjectName("MainWindow2")
-        MainWindow2.resize(1396, 737)
+        MainWindow2.resize(1093, 734)
         self.centralwidget = QtWidgets.QWidget(MainWindow2)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -20,50 +33,75 @@ class Ui_MainWindow2(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.groupBox_3 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_3.setObjectName("groupBox_3")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.groupBox_3)
-        self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem)
+        self.gridLayout = QtWidgets.QGridLayout(self.groupBox_3)
+        self.gridLayout.setObjectName("gridLayout")
         self.label_2 = QtWidgets.QLabel(self.groupBox_3)
         font = QtGui.QFont()
         font.setFamily("Agency FB")
         font.setPointSize(24)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
-        self.verticalLayout.addWidget(self.label_2)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout.addItem(spacerItem1)
+        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
         self.label = QtWidgets.QLabel(self.groupBox_3)
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap("../../../study/pic/begin.png"))
         self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem2)
+        self.gridLayout.addWidget(self.label, 2, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem1, 3, 0, 1, 1)
         self.horizontalLayout_4.addWidget(self.groupBox_3)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.groupBox)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setContentsMargins(50, -1, 50, -1)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem2)
         self.radioButton_2 = QtWidgets.QRadioButton(self.groupBox)
         self.radioButton_2.setObjectName("radioButton_2")
         self.horizontalLayout_3.addWidget(self.radioButton_2)
         self.radioButton = QtWidgets.QRadioButton(self.groupBox)
+
+        # 默认选中实时检测
+        self.radioButton.setChecked(True)
         self.radioButton.setObjectName("radioButton")
+        self.radioButton.toggled.connect(lambda: self.radioF(self.radioButton,self.dateEdit,self.timeEdit))
+
+        # connect(ui.radioButton, SIGNAL(toggled(bool)), this, SLOT(radioBtnSlot()));
+        # connect(ui.radioButton_2, SIGNAL(toggled(bool)), this, SLOT(radioBtnSlot2()));
+        # connect(ui.radioButton_3, SIGNAL(toggled(bool)), this, SLOT(radioBtnSlot3()));
+
         self.horizontalLayout_3.addWidget(self.radioButton)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem3)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setContentsMargins(50, -1, 50, -1)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem4)
+
         self.dateEdit = QtWidgets.QDateEdit(self.groupBox)
         self.dateEdit.setObjectName("dateEdit")
+        self.dateEdit.setCalendarPopup(True)
+        # 设置为当前日期
+        t = time.strftime("%Y-%m-%d")
+        self.dateEdit.setDate(QDate.fromString(t, 'yyyy-MM-dd'))
+
         self.horizontalLayout_2.addWidget(self.dateEdit)
-        spacerItem3 = QtWidgets.QSpacerItem(100, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem3)
         self.timeEdit = QtWidgets.QTimeEdit(self.groupBox)
         self.timeEdit.setObjectName("timeEdit")
+        self.dateEdit.setDisabled(True)
+        self.timeEdit.setDisabled(True)
+
         self.horizontalLayout_2.addWidget(self.timeEdit)
+
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem5)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.scrollArea = QtWidgets.QScrollArea(self.groupBox)
         self.scrollArea.setMinimumSize(QtCore.QSize(403, 383))
@@ -71,54 +109,66 @@ class Ui_MainWindow2(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 567, 843))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -103, 380, 843))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.pushButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_6.addWidget(self.pushButton)
-        self.pushButton_3 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_3.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.horizontalLayout_6.addWidget(self.pushButton_3)
-        self.pushButton_2 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_2.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout_6.addWidget(self.pushButton_2)
-        self.pushButton_4 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_4.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.horizontalLayout_6.addWidget(self.pushButton_4)
+
+
+        self.pushButton1 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton1.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton1.setObjectName("pushButton1")
+
+
+
+        self.horizontalLayout_6.addWidget(self.pushButton1)
+
+        self.pushButton2 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton2.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton2.setObjectName("pushButton2")
+
+        self.horizontalLayout_6.addWidget(self.pushButton2)
+
+        self.pushButton3 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton3.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton3.setObjectName("pushButton3")
+
+        self.horizontalLayout_6.addWidget(self.pushButton3)
+
+        self.pushButton4 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton4.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton4.setObjectName("pushButton4")
+
+        self.horizontalLayout_6.addWidget(self.pushButton4)
         self.verticalLayout_3.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.pushButton_5 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_5.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.horizontalLayout_7.addWidget(self.pushButton_5)
-        self.pushButton_6 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_6.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_6.setObjectName("pushButton_6")
-        self.horizontalLayout_7.addWidget(self.pushButton_6)
-        self.pushButton_7 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_7.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_7.setObjectName("pushButton_7")
-        self.horizontalLayout_7.addWidget(self.pushButton_7)
-        self.pushButton_8 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_8.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_8.setObjectName("pushButton_8")
-        self.horizontalLayout_7.addWidget(self.pushButton_8)
+
+        self.pushButton5 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton5.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton5.setObjectName("pushButton5")
+        self.horizontalLayout_7.addWidget(self.pushButton5)
+        self.pushButton6 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton6.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton6.setObjectName("pushButton6")
+        self.horizontalLayout_7.addWidget(self.pushButton6)
+        self.pushButton7 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton7.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton7.setObjectName("pushButton7")
+        self.horizontalLayout_7.addWidget(self.pushButton7)
+        self.pushButton8 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton8.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton8.setObjectName("pushButton8")
+        self.horizontalLayout_7.addWidget(self.pushButton8)
         self.verticalLayout_3.addLayout(self.horizontalLayout_7)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.pushButton_13 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_13.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_13.setObjectName("pushButton_13")
-        self.horizontalLayout_9.addWidget(self.pushButton_13)
+        self.pushButton9 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton9.setMinimumSize(QtCore.QSize(60, 60))
+        self.pushButton9.setObjectName("pushButton9")
+        self.horizontalLayout_9.addWidget(self.pushButton9)
         self.pushButton_14 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_14.setMinimumSize(QtCore.QSize(60, 60))
         self.pushButton_14.setObjectName("pushButton_14")
@@ -320,12 +370,32 @@ class Ui_MainWindow2(object):
         self.horizontalLayout.addLayout(self.horizontalLayout_4)
         MainWindow2.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow2)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1396, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1093, 26))
         self.menubar.setObjectName("menubar")
         MainWindow2.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow2)
         self.statusbar.setObjectName("statusbar")
         MainWindow2.setStatusBar(self.statusbar)
+
+        # 根据传感器数据改变按钮颜色
+        dc = {}
+        dc[self.pushButton1]='red'
+        dc[self.pushButton2]='green'
+        dc[self.pushButton3]='red'
+        dc[self.pushButton4]='green'
+        dc[self.pushButton5]='green'
+        dc[self.pushButton6] = 'green'
+        dc[self.pushButton7] = 'green'
+        dc[self.pushButton8] = 'green'
+
+        for key,value in dc.items():
+            if value=='green':
+                key.setStyleSheet("background-color: rgb(0, 255, 0);")
+            else:
+                key.setStyleSheet("background-color: rgb(255, 0, 0);")
+
+
+
 
         self.retranslateUi(MainWindow2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow2)
@@ -338,53 +408,16 @@ class Ui_MainWindow2(object):
         self.groupBox.setTitle(_translate("MainWindow2", "玻璃状态展示"))
         self.radioButton_2.setText(_translate("MainWindow2", "历史记录"))
         self.radioButton.setText(_translate("MainWindow2", "实时监测"))
-        self.pushButton.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_3.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_2.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_4.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_5.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_6.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_7.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_8.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_13.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_14.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_15.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_16.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_9.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_10.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_11.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_12.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_29.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_30.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_31.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_32.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_17.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_18.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_19.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_20.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_25.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_26.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_27.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_28.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_21.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_22.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_23.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_24.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_45.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_46.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_47.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_48.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_33.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_34.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_35.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_36.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_41.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_42.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_43.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_44.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_37.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_38.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_39.setText(_translate("MainWindow2", "玻璃1"))
-        self.pushButton_40.setText(_translate("MainWindow2", "玻璃1"))
+        self.pushButton1.setText(_translate("MainWindow2", "玻璃1"))
+        self.pushButton2.setText(_translate("MainWindow2", "玻璃2"))
+        self.pushButton3.setText(_translate("MainWindow2", "玻璃3"))
+        self.pushButton4.setText(_translate("MainWindow2", "玻璃4"))
+        self.pushButton5.setText(_translate("MainWindow2", "玻璃5"))
+        self.pushButton6.setText(_translate("MainWindow2", "玻璃6"))
+        self.pushButton7.setText(_translate("MainWindow2", "玻璃7"))
+        self.pushButton8.setText(_translate("MainWindow2", "玻璃8"))
+        self.pushButton9.setText(_translate("MainWindow2", "玻璃9"))
         self.groupBox_2.setTitle(_translate("MainWindow2", "状态统计图"))
+
+
 
