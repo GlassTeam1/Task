@@ -17,6 +17,7 @@ from pyqtgraph.Qt import QtGui, QtCore
 import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pyqtgraph as pg
+import startListen
 
 class Ui_MainWindow(object):
     def __init__(self):
@@ -268,8 +269,12 @@ class Ui_MainWindow(object):
         self.comboBox.addItem("")
         self.gridLayout.addWidget(self.comboBox, 4, 1, 1, 1)
         self.comboBox_2 = QtWidgets.QComboBox(self.groupBox_2)
+
+        # 动态加入下拉框空位
         self.comboBox_2.setObjectName("comboBox_2")
-        self.comboBox_2.addItem("")
+        for i in range(len(startListen.StartListen().serialPort)):
+            self.comboBox_2.addItem("")
+
         self.gridLayout.addWidget(self.comboBox_2, 0, 1, 1, 1)
         self.comboBox_5 = QtWidgets.QComboBox(self.groupBox_2)
         self.comboBox_5.setObjectName("comboBox_5")
@@ -339,7 +344,12 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(0, _translate("MainWindow", "com1"))
         self.comboBox.setItemText(1, _translate("MainWindow", "com2"))
         self.comboBox.setItemText(2, _translate("MainWindow", "com3"))
-        self.comboBox_2.setItemText(0, _translate("MainWindow", "传感器1"))
+
+        # 动态添加下拉框内容
+        for n,i in enumerate(startListen.StartListen().serialPort):
+            self.comboBox_2.setItemText(n, _translate("MainWindow", i))
+
+
         self.comboBox_5.setItemText(0, _translate("MainWindow", "8"))
         self.comboBox_4.setItemText(0, _translate("MainWindow", "1"))
         self.label_5.setText(_translate("MainWindow", "数据位"))
@@ -359,6 +369,8 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+
+    #开启生产者消费者线程 分别用于读取数据和存储数据
     ui.producer.start()
     ui.consumer.start()
     #计时器开始
