@@ -72,7 +72,7 @@ class AnalysisData:
 
         #因为在演示的过程中调用MATLAB程序需要在本地电脑安装MATLAB（还没有找到打包MATLAB程序的方式，需要研究算法的一方提供打包好的文件），因此结果也采用模拟方式
         #结果数据解释说明：结果数据的范围是0~1，0.3~0.5 玻璃处于较危险状态；0.5~1 玻璃处于严重危险状态；0~0.3 玻璃处于安全状态（暂定模拟数据的范围在这个范围内）
-        result = 0.3 * random.random()  # 产生0~1的随机浮点数
+        result = random.random()  # 产生0~1的随机浮点数
 
 
         return [device_1.telemetry.x,device_1.telemetry.y,device_1.telemetry.z,device_2.telemetry.strain,device_3.telemetry.temperature,
