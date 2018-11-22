@@ -27,7 +27,7 @@ class ImplLink(InterfaceDatabaseOperation):#数据库连接
         print("数据库连接成功！")
         return db
 
-class ImplAdd(InterfaceDatabaseOperation):
+class ImplAdd(InterfaceDatabaseOperation):#添加数据
     def __init__(self,db):
         self.db = db
 
@@ -50,10 +50,10 @@ class ImplAdd(InterfaceDatabaseOperation):
 
 class ImplSearch(InterfaceDatabaseOperation):#数据库搜索
     def __init__(self,queue,db):
-        self.dataname=queue
+        self.dataname=queue#传入dataname数组
         self.db = db
 
-    def Isearch(self,tablename):
+    def Isearch(self,tablename):#sql语句执行搜索最后一条
 
         cursor = self.db.cursor()
         sql="select * from  %s  order by idtestdata desc limit 1 "
@@ -67,7 +67,7 @@ class ImplSearch(InterfaceDatabaseOperation):#数据库搜索
             self.db.rollback()
 
 
-    def search(self):
+    def search(self):#对dataname中每一个名字进行sql搜索，results存储最后一条结果
         results = []
         for i in self.dataname:
             #print(i)
