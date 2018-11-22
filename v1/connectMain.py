@@ -10,7 +10,7 @@ class Main(QMainWindow, mainwindow2.Ui_MainWindow2):
         self.setupUi(self)
 
 
-class Child(QMainWindow, print.Ui_MainWindow10):
+class Child(QMainWindow, print.Ui_MainWindow):
     def __init__(self):
         super(Child, self).__init__()
         self.setupUi(self)
