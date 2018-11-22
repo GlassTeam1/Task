@@ -4,9 +4,10 @@ import random
 import threading
 import time
 
-from analysisData import AnalysisData
-from startListen import StartListen
-from uploadData import Thread_database
+from v1.analysisData import AnalysisData
+from v1.startListen import StartListen
+#from uploadData import Thread_database
+from v1.uploadData import *
 
 '''
 生产者：
@@ -60,11 +61,14 @@ class Consumer(threading.Thread):
         threading.Thread.__init__(self,name=t_name)
         self.data = queue
 
-        self.insert = Thread_database()
+        self.dbLink = ImplLink().link()
+
         print("消费者线程初始化成功！！！")
 
     def run(self):
-
+        queue=["xian.testdata"]
+        insert = ImplAdd(self.dbLink)
+        find = ImplSearch(queue,self.dbLink)
         while True:
             '''
             调用数据库存储函数
@@ -72,7 +76,9 @@ class Consumer(threading.Thread):
             val = self.data.get()
             #print(val)
             time.sleep(0.10) #如果存数据操作太快 有可能在getData的时候读不到了吗？
-            self.insert.insert(val)
+
+            insert.add(val)
+            print(find.search()) # find.search()返回元组类型，内部数据为数据库最新的记录，元组第一位为id，应舍弃
 
     def getData(self):
         print("当前截取到数据计算得到的结果为: %f"%(self.data.get()[9]))
