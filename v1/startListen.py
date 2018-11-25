@@ -6,9 +6,9 @@ import bytes2int as b2i
 '''
 定义常量
 '''
-const.BAUDRATE = 38400 #波特率
-const.DATABITS = 8 #数据位
-const.STOPBITS = 1 #终止位
+BAUDRATE = 38400 #波特率
+DATABITS = 8 #数据位
+STOPBITS = 1 #终止位
 class StartListen:
     def __init__(self):
         print("初始化串口监听。。。。。")

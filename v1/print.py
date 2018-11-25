@@ -12,12 +12,12 @@ from PyQt5.QtGui import QPainter, QPen, QPolygon
 from PyQt5.QtWidgets import QApplication, QWidget
 import sys
 import numpy as np
-from v1.producer import *
+from producer import *
 from pyqtgraph.Qt import QtGui, QtCore
 import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pyqtgraph as pg
-import v1.startListen
+import startListen
 
 class Ui_MainWindow(object):
     def __init__(self):
@@ -287,7 +287,7 @@ class Ui_MainWindow(object):
 
         # 动态加入下拉框空位
         self.comboBox_2.setObjectName("comboBox_2")
-        for i in range(len(v1.startListen.StartListen().serialPort)):
+        for i in range(len(startListen.StartListen().serialPort)):
             self.comboBox_2.addItem("")
 
         self.gridLayout.addWidget(self.comboBox_2, 0, 1, 1, 1)
@@ -361,7 +361,7 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(2, _translate("MainWindow", "com3"))
 
         # 动态添加下拉框内容
-        for n,i in enumerate(v1.startListen.StartListen().serialPort):
+        for n,i in enumerate(startListen.StartListen().serialPort):
             self.comboBox_2.setItemText(n, _translate("MainWindow", i))
 
 

@@ -4,10 +4,10 @@ import random
 import threading
 import time
 
-from v1.analysisData import AnalysisData
-from v1.startListen import StartListen
+from analysisData import AnalysisData
+from startListen import StartListen
 #from uploadData import Thread_database
-from v1.uploadData import *
+from uploadData import *
 
 '''
 生产者：
@@ -15,6 +15,7 @@ from v1.uploadData import *
 调用串口数据解析模块
 将所有数据（包含结果）封装成为元组
 '''
+R= [11]
 class Producer(threading.Thread):
 
     def __init__(self,t_name,queue):
@@ -73,13 +74,17 @@ class Consumer(threading.Thread):
             '''
             调用数据库存储函数
             '''
+            global R
             val = self.data.get()
             #print(val)
             time.sleep(0.10) #如果存数据操作太快 有可能在getData的时候读不到了吗？
 
             insert.add(val)
-            print(find.search()) # find.search()返回元组类型，内部数据为数据库最新的记录，元组第一位为id，应舍弃
 
+            R=find.search() # find.search()返回元组类型，内部数据为数据库最新的记录，元组第一位为id，应舍弃
+            print("R:",R)
+            # main = connectMain.Main()
+            # main.show()
     def getData(self):
         print("当前截取到数据计算得到的结果为: %f"%(self.data.get()[9]))
         return self.data.get()
